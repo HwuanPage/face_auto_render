@@ -1,31 +1,40 @@
 import streamlit as st
+from minio import Minio
 from datetime import datetime
+from io import BytesIO
 import os
-from PIL import Image,ImageDraw,ImageFont
-def save_uploadedfile(directory,file):  # 이미지 업로드 함수
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    with open(os.path.join(directory,file.name),'wb') as f:
-        f.write(file.getbuffer())
-        return st.success("Saved File:{} in uploads".format(file.name))
-def add_watermark(image_path, watermark_text,output_path):
-    photo = Image.open(image_path)
-    width, height = photo.size
-    drawing = ImageDraw.Draw(photo)
-    black = (255, 255, 255)  # color of the text
-    font = ImageFont.truetype("arial.ttf", 40)
-    drawing.text((photo.width/2, photo.height/2), watermark_text, fill=black, font=font)
-    photo.save(output_path)
-menu =['이미지 업로드','사용자 정보','credit']
-choice = st.sidebar.selectbox('메뉴',menu)
-img = st.file_uploader('이미지 업로드', type=['png','jpg','jpeg'])
-if img is not None:
-    current_time = datetime.now()
-    filename = current_time.isoformat().replace(':','_')
-    img_file_name=filename
-    save_uploadedfile('images',img)
-    uploaded_image_path = os.path.join('images',img.name)
-    watermark_text ="your destiny is gonna be 3d printed"
-    output_image_path = os.path.join('images',img_file_name+'_watermarked.jpg')
-    add_watermark(uploaded_image_path,watermark_text,output_image_path)
-    st.image(output_image_path,caption='워터마크가 추가된 이미지',use_column_width=True)
+
+# Minio 서버 정보
+minio_host = "localhost:9000"
+access_key = "toyDt2pDVZKdp0I7WEXV"
+secret_key = "9o4bW2ErV7Drkh7bX2wxZlxfFTE78A5cLXdq4gvr"
+bucket_name = "graduationtest"
+
+# Minio 클라이언트 생성
+minio_client = Minio(minio_host, access_key=access_key, secret_key=secret_key, secure=False)
+
+# 이미지 업로드 함수
+def upload_image_to_minio(file):
+    try:
+        # 이미지를 Minio 서버에 업로드
+        file_name = f"{datetime.now().isoformat().replace(':', '_')}_{file.name}"
+        file_data = BytesIO(file.getvalue())
+        file_size = len(file_data.getbuffer())
+        minio_client.put_object(bucket_name, file_name, file_data, file_size)
+
+        st.success(f"Uploaded File: {file_name} to Minio bucket: {bucket_name}")
+    except Exception as e:
+        st.error(f"Error uploading file to Minio: {e}")
+
+# Streamlit 애플리케이션
+def main():
+    st.title("Streamlit 이미지 업로더")
+
+    # 이미지 업로드
+    uploaded_file = st.file_uploader("이미지를 업로드하세요.", type=['png', 'jpg', 'jpeg'])
+    if uploaded_file is not None:
+        upload_image_to_minio(uploaded_file)
+
+# Streamlit 애플리케이션 실행
+if __name__ == "__main__":
+    main()

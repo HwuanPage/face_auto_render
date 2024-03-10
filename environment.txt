@@ -1,0 +1,12 @@
+environment
+##it's for Windows OS##
+minio			https://min.io/download#/windows
+How2Start		minio.exe server [dataex]		[]is data storage
+			http://localhost:9000						minioadmin/minioadmin
+
+
+##this is for Seong's local computer##
+Bucket		graduationtest
+Access key		toyDt2pDVZKdp0I7WEXV
+Secret  key		9o4bW2ErV7Drkh7bX2wxZlxfFTE78A5cLXdq4gvr
+			
