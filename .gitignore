@@ -1,3 +1,8 @@
 cloudflared
 
 cloudflared.log
+
+rendering_samples
+weights
+Pano_weights
+crop_samples
