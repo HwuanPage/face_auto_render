@@ -1,19 +1,19 @@
-{"level":"info","time":"2024-03-08T03:15:27Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
-{"level":"info","time":"2024-03-08T03:15:27Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
-{"level":"info","time":"2024-03-08T03:15:28Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
-{"level":"info","time":"2024-03-08T03:15:28Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"+--------------------------------------------------------------------------------------------+"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"|  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"|  https://engaged-arthur-material-exhibit.trycloudflare.com                                 |"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"+--------------------------------------------------------------------------------------------+"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Version 2024.2.1"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"GOOS: linux, GOVersion: go1.21.5, GoArch: amd64"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Settings: map[ha-connections:1 logfile:./cloudflared.log metrics:localhost:45678 protocol:quic url:ssh://localhost:22]"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Generated Connector ID: ae69f3be-6b95-4a44-b628-ac29b57b132a"}
-{"level":"info","autoupdateFreq":86400000,"time":"2024-03-08T03:15:29Z","message":"Autoupdate frequency is set"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Initial protocol quic"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"ICMP proxy will use 172.28.0.12 as source for IPv4"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"ICMP proxy will use :: as source for IPv6"}
-{"level":"info","time":"2024-03-08T03:15:29Z","message":"Starting metrics server on 127.0.0.1:45678/metrics"}
-{"level":"info","event":0,"connection":"d8d33067-bfe0-4b61-8239-16d737dc2c26","connIndex":0,"location":"ord06","ip":"198.41.192.107","protocol":"quic","time":"2024-03-08T03:15:30Z","message":"Registered tunnel connection"}
+{"level":"info","time":"2024-03-14T09:47:47Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2024-03-14T09:47:47Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2024-03-14T09:47:48Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2024-03-14T09:47:48Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"+--------------------------------------------------------------------------------------------+"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"|  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"|  https://exposure-developmental-machines-orlando.trycloudflare.com                         |"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"+--------------------------------------------------------------------------------------------+"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Version 2024.2.1"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"GOOS: linux, GOVersion: go1.21.5, GoArch: amd64"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Settings: map[ha-connections:1 logfile:./cloudflared.log metrics:localhost:45678 protocol:quic url:ssh://localhost:22]"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Generated Connector ID: 0073d7ea-d1d5-4f85-b012-fef6e3977e45"}
+{"level":"info","autoupdateFreq":86400000,"time":"2024-03-14T09:47:49Z","message":"Autoupdate frequency is set"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Initial protocol quic"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"ICMP proxy will use 172.28.0.12 as source for IPv4"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"ICMP proxy will use :: as source for IPv6"}
+{"level":"info","time":"2024-03-14T09:47:49Z","message":"Starting metrics server on 127.0.0.1:45678/metrics"}
+{"level":"info","event":0,"connection":"6eed5151-2413-4bcc-885b-5f61f9c1adb3","connIndex":0,"location":"ams15","ip":"198.41.192.77","protocol":"quic","time":"2024-03-14T09:47:50Z","message":"Registered tunnel connection"}
