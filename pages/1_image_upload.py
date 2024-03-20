@@ -23,8 +23,21 @@ def upload_image_to_minio(file):
         minio_client.put_object(bucket_name, file_name, file_data, file_size)
 
         st.success(f"Uploaded File: {file_name} to Minio bucket: {bucket_name}")
+        
+        return file_name
     except Exception as e:
         st.error(f"Error uploading file to Minio: {e}")
+        
+def response_image_from_minio(file_name):
+    try:
+        # Minio 서버에서 결과 이미지를 가져옴
+        data = minio_client.get_object(bucket_name, file_name)
+        st.download_button('파일 다운로드', data)
+        
+        st.success(f"Received result from Minio server: {data}")
+    except Exception as e:
+        st.error(f"Error getting result from Minio: {e}")
+        
 
 # Streamlit 애플리케이션
 def main():
@@ -34,9 +47,14 @@ def main():
     uploaded_file = st.file_uploader("이미지를 업로드하세요.", type=['png', 'jpg', 'jpeg'])
     
     if uploaded_file is not None:
-        upload_image_to_minio(uploaded_file)
+        file_name = upload_image_to_minio(uploaded_file)
+        # 결과 파일이 존재 한다면 결과 이미지 출력
+        if minio_client.bucket_exists(bucket_name) and minio_client.stat_object(bucket_name, file_name):
+            st.write("이미지가 변환되었습니다...")
+            response_image_from_minio(file_name)
+        else:
+            st.write("이미지를 변환하고 있습니다...")
         
-
 # Streamlit 애플리케이션 실행
 if __name__ == "__main__":
     main()

@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-import streamlit_scrollable_textbox as stx
 
 def main():
     st.title("3D 이미지 변환")
@@ -16,7 +15,6 @@ def main():
     if st.button("👉이미지 업로드 하러 가기👈"):
             switch_page("image_upload")
             
-    stx.scrollableTextbox('My very long text.')
 
 if __name__ == "__main__":
     main()

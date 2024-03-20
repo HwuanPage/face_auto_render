@@ -5,4 +5,4 @@ streamlit run your_script.py
 
 pip install streamlit-extras
 
-pip install streamlit-scrollable-textbox
+~~pip install streamlit-scrollable-textbox~~
