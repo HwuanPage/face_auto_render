@@ -1,6 +1,7 @@
 from dlib_func import dlib_kps
 from projector_func import *
 from recrop_func import *
+from nst import *
 import os
 import click
 
@@ -18,10 +19,32 @@ class ImageTo3D:
             size = size
         )
 
-    def style_transfer(self, crop_image_dir, style_type):
-        print("style transfer")
-        print(crop_image_dir)
-        print(style_type)
+    def style_transfer(self, crop_image_dir, style_type, steps:int=300,image_size:int=1024):
+
+        content_path = {
+            0:'./contents_images/Leonardo_da_Vinci_121.jpg',
+            1:'./contents_images/Rembrandt_75.jpg',
+            2:'./contents_images/Vincent_van_Gogh_84.jpg',
+            3:'./contents_images/Vincent_van_Gogh_93.jpg',
+            4:'./contents_images/Vincent_van_Gogh_95.jpg',
+            5:'./contents_images/Vincent_van_Gogh_837.jpg',
+        }
+
+        # load images
+        list_dir = os.listdir(crop_image_dir)
+
+        for img_name in list_dir:
+            _, extension = os.path.splitext(img_name)
+
+            if extension == '.json' or extension=='.pkl':
+                continue
+
+            output_path = os.path.join(crop_image_dir, img_name)
+            img_path = os.path.join(crop_image_dir, img_name)
+            
+            neural_transform_main(img_path, content_path[style_type] , output_path ,steps=steps,img_size=image_size)
+
+        print('Style Transform Done!')
 
     def build_3d(
         self,
@@ -37,21 +60,17 @@ class ImageTo3D:
 
         image_count = 0
         for img_name in dir_list:
-            _, extension = os.path.splitext(img_name)
+            _, ext = os.path.splitext(img_name)
 
-            if extension == '.json' or extension=='.pkl':
+            if ext == '.json' or ext=='.pkl':
                 continue
 
             image_count += 1
-        # print('------------------')
-        # print(pano_wight_path)
-        # print(crop_dir_path)
-        # print(outdir_path)
-        # print(proj_steps)
-        # print(pti_steps)
-        # print(extension)
-        # print('------------------')
         for i in range(image_count):
+            
+            index = (i+1)%4
+            print(f"cuda index:{index}")
+            
             run_projection(
                 network_pkl = pano_wight_path,
                 target_img = crop_dir_path,
@@ -59,7 +78,8 @@ class ImageTo3D:
                 idx = i,
                 num_steps = proj_steps,
                 num_steps_pti = pti_steps,
-                extension = extension
+                extension = extension,
+                device = torch.device('cuda',index)
             )
 
 
@@ -92,12 +112,10 @@ def flow_run(
 
     I2R.spot_face_feature(image_dir)
 
-# crop_images(self, image_dir:str, crop_dir_path:str, size:int):
-
     I2R.crop_images(image_dir, crop_dir, size)
 
     if style_transform:
-        I2R.style_transfer(crop_dir, style_type)
+        I2R.style_transfer(crop_dir, style_type,steps = steps_proj*2)
 
     I2R.build_3d(outdir_path = out_dir_path,
                  crop_dir_path = crop_dir,

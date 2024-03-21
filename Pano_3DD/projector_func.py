@@ -163,11 +163,11 @@ def project(
 
 
         # Step
-        loss.requires_grad_(True)
-        optimizer.zero_grad(set_to_none=True)
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        logprint(f'step: {step+1:>4d}/{num_steps} mse: {mse_loss:<4.2f} perc: {perc_loss:<4.2f} w_norm: {w_norm_loss:<4.2f}  noise: {float(reg_loss):<5.2f}')
+        if (step+1)%50:
+            logprint(f'step: {step+1:>4d}/{num_steps} mse: {mse_loss:<4.2f} perc: {perc_loss:<4.2f} w_norm: {w_norm_loss:<4.2f}  noise: {float(reg_loss):<5.2f}')
 
         # Save projected W for each optimization step.
         w_out[step] = w_opt.detach().cpu()[0]
@@ -250,11 +250,11 @@ def project_pti(
         loss = 0.1 * mse_loss + perc_loss
 
         # Step
-        loss.requires_grad_(True)
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
-        logprint(f'step: {step+1:>4d}/{num_steps} mse: {mse_loss:<4.2f} perc: {perc_loss:<4.2f}')
+        if (step+1)%50:
+            logprint(f'step: {step+1:>4d}/{num_steps} mse: {mse_loss:<4.2f} perc: {perc_loss:<4.2f}')
 
         if step == num_steps - 1 or step % 10 == 0:
             out_params.append(copy.deepcopy(G).eval().requires_grad_(False).cpu())
@@ -269,25 +269,25 @@ def run_projection(
     outdir: str,
     idx: int = 0,
     seed: int = 666,
-    num_steps: int = 100,
-    num_steps_pti: int = 100,
+    num_steps: int = 128,
+    num_steps_pti: int = 128,
     shapes: bool = True,
-    extension: str = '.ply'
+    extension: str = '.ply',
+    device = torch.device('cuda',index=1)
 ):
     """
     Project given image to the latent space of pretrained network pickle.
     """
     np.random.seed(seed)
     torch.manual_seed(seed)
+    torch.set_grad_enabled(True)
 
     # Render debug output: optional video and projected image and W vector.
     outdir = os.path.join(outdir, str(idx))
-    print(outdir)
     os.makedirs(outdir, exist_ok=True)
 
     # Load networks.
     print('Loading networks from "%s"...' % network_pkl)
-    device = torch.device('cuda')
     with dnnlib.util.open_url(network_pkl) as fp:
         network_data = legacy.load_network_pkl(fp)
         G = network_data['G_ema'].requires_grad_(False).to(device) # type: ignore
@@ -312,7 +312,6 @@ def run_projection(
     target_uint8 = np.array(target_pil, dtype=np.uint8)
 
     # Optimize projection.
-    start_time = perf_counter()
     projected_w_steps, c = project(
         G,
         target=torch.tensor(target_uint8.transpose([2, 0, 1]), device=device), # pylint: disable=not-callable
@@ -321,7 +320,6 @@ def run_projection(
         device=device,
         verbose=True
     )
-    print (f'Elapsed: {(perf_counter()-start_time):.1f} s')
     G_steps = project_pti(
         G,
         target=torch.tensor(target_uint8.transpose([2, 0, 1]), device=device), # pylint: disable=not-callable
@@ -331,7 +329,6 @@ def run_projection(
         device=device,
         verbose=True
     )
-    print (f'Elapsed: {(perf_counter()-start_time):.1f} s')
 
     # Save final projected frame and W vector.
     target_pil.save(f'{outdir}/target.png')
@@ -344,8 +341,9 @@ def run_projection(
     np.savez(f'{outdir}/projected_w.npz', w=projected_w.unsqueeze(0).cpu().numpy())
 
     # Save geometry
-    max_batch = 10000000
-    voxel_resolution = 512
+    max_batch = 8000000
+
+    voxel_resolution = 256
     if shapes:
         # generate shapes
         # print('Generating shape for frame %d / %d ...' % (frame_idx, num_keyframes * w_frames))
