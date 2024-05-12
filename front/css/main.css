@@ -1,0 +1,26 @@
+.name {
+    font-size: 2em;
+    text-align: left;
+}
+.big-text {
+    font-size: 3em;
+    text-align: left;
+}
+.small-text {
+    font-size: 1em;
+    text-align: left;
+}
+.btn {
+    padding: 10px 20px;
+    font-size: 1.5em;
+    background-color: white;
+    color: navy;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.image {
+    max-width: 100%;
+    height: auto;
+    align-self: flex-start;
+}
