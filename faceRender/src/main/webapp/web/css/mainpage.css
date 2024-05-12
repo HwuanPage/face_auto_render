@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    width: 80%; /* 최대 너비 제한, 필요에 따라 조정 */
+}
+
+.upload-container {
+    display: inline-block; /* 내용에 맞게 너비 조정 */
+    text-align: center;
+}
+
+.upload-text {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.upload-box {
+    padding: 40px;
+    border: 2px dashed #ccc;
+    background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 10px, #d0d0d0 10px, #d0d0d0 20px); /* 뚜렷한 격자 무늬 스타일 */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-box:hover {
+    background-color: #e9e9e9;
+}
+
+.upload-box p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
