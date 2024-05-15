@@ -64,10 +64,10 @@
                 <div class="col-lg-5">
                     <div class="tm-intro-text-container">
                         <h2 class="tm-text-primary mb-4">이미지 업로드</h2>
+                          <input type="file" name="uploadFile" accept="image/*" onchange="setThumbnail(event);"/>
                           <div class=".tm-input-image-view">
-                            <img src="./img/test_image1.png" alt="업로드 이미지" height="650">
+                            <div id="image_container"></div>
                           </div>
-                          <input type="file" name="uploadFile" accept="image/*" required>
                     </div>
                 </div>
                 
@@ -93,6 +93,18 @@
     <script src="js/jquery.singlePageNav.min.js"></script>     
     <script src="js/bootstrap.min.js"></script>  -->
     <script>
+
+      function setThumbnail(event) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var img = document.createElement("img");
+          img.setAttribute("src", event.target.result);
+          document.querySelector("div#image_container").appendChild(img);
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+      }
 
       function getOffSet(){
         var _offset = 450;
