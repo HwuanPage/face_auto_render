@@ -64,10 +64,12 @@
                 <div class="col-lg-5">
                     <div class="tm-intro-text-container">
                         <h2 class="tm-text-primary mb-4">이미지 업로드</h2>
+                          <form action="/upload" method="post" enctype="multipart/form-data"></form>
                           <input type="file" name="uploadFile" accept="image/*" onchange="setThumbnail(event);"/>
                           <div class=".tm-input-image-view">
                             <div id="image_container"></div>
                           </div>
+                        <button type="submit">Upload</button>
                     </div>
                 </div>
                 
