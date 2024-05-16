@@ -86,12 +86,6 @@
         </div>
     </section>
     
-    <!-- <script src="js/jquery-1.9.1.min.js"></script>     
-    <script src="slick/slick.min.js"></script>
-    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="js/easing.min.js"></script>
-    <script src="js/jquery.singlePageNav.min.js"></script>     
-    <script src="js/bootstrap.min.js"></script>  -->
     <script>
 
       function setThumbnail(event) {
@@ -100,6 +94,7 @@
         reader.onload = function(event) {
           var img = document.createElement("img");
           img.setAttribute("src", event.target.result);
+          img.style.height = "400px";
           document.querySelector("div#image_container").appendChild(img);
         };
 
