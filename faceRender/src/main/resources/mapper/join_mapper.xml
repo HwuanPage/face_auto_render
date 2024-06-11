@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="grad.member.mapper.MemberMapper">
+	<!-- 아이디 중복체크 -->
+	<select id="selectDuplicateMemberSQL" parameterType="java.util.Map" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM tb_member WHERE member_id = #{memId}
+		]]>
+	</select>
+	
+	<!-- 회원추가 -->
+	<insert id="insertMemberSQL" parameterType="java.util.Map">
+		INSERT INTO graduation.tb_member
+		( member_id, member_pwd, member_name, member_is_super, member_is_valid, reg_dtime)
+		VALUES(#{memId}, SHA2(#{memPwd},512), #{memName}, 'USER','Y', NOW());
+	</insert>
+	
+	
+	
+</mapper>
