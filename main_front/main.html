@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirk</title>
     <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
     <link rel="stylesheet" href="slick/slick.css">
@@ -12,12 +11,13 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <style>
-      #3dViewer {
+        #3dViewer {
             width: calc(100% - 20px);
             height: 500px;
             margin: 10px;
             border: 1px solid #ddd;
         }
+
         .dropzone img {
             max-height: 100%;
             max-width: 100%;
@@ -47,26 +47,23 @@
             height: 650px;
             margin: 10px;
         }
+
+        #container {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+
+        #fileInput {
+            display: block;
+            margin: 10px 0;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script>
-        var MODEL_URL = "https://example.com/your-3d-model-url"; // 여기에 실제 모델의 URL을 입력하세요
-      
-        window.onload = function() {
-          var iframe = document.getElementById('viewerFrame');
-          var src = "https://3dviewer.net/embed.html#model=" + MODEL_URL
-                  + "$camera=169.48379,370.18722,427.39485,255.46234,255.54915,255.43774,0.00000,1.00000,0.00000,45.00000"
-                  + "$cameramode=perspective"
-                  + "$envsettings=fishermans_bastion,off"
-                  + "$backgroundcolor=255,255,255,255"
-                  + "$defaultcolor=200,200,200"
-                  + "$edgesettings=off,0,0,0,1";
-          iframe.src = src;
-        };
-      </script>
 </head>
 <body>
     <section id="infinite" class="text-white tm-font-big tm-parallax">
@@ -130,8 +127,11 @@
                 <div class="col-lg-5">
                     <div class="tm-intro-text-container">
                         <h2 class="tm-text-primary mb-4">3D 변환 결과</h2>
-                            <iframe id="viewerFrame" width="500" height="500" style="border:1px solid #eeeeee;"></iframe>
+                        <div id="image-viewer">
+                            <img id="result-image" style="display:none;" />
+                        </div>
                         <div id="3dViewer"></div>
+                        <input type="file" id="fileInput" accept=".ply">
                     </div>
                 </div>
             </div>
@@ -146,15 +146,18 @@
                 var loader = new THREE.PLYLoader();
                 var geometry = loader.parse(contents);
 
-                var material = new THREE.PointsMaterial({color: 0x00ff00, size: 0.02});
+                var material = new THREE.PointsMaterial({ color: 0x888888, size: 8 });
                 var points = new THREE.Points(geometry, material);
-
+                points.position.x = -2;
+                
                 var scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xffffff);
                 scene.add(points);
+                scene.position.set(-20, 0, 0);
 
-                var camera = new THREE.PerspectiveCamera(75, window.innerWidth / 500, 0.1, 1000);
-                camera.position.z = 2;
+                var camera = new THREE.PerspectiveCamera(50, window.innerWidth / 500, 0.1, 1000);
+                camera.position.set(0, 0, 5);
+                camera.lookAt(scene.position);
 
                 var renderer = new THREE.WebGLRenderer();
                 renderer.setSize(window.innerWidth - 20, 500);
@@ -173,6 +176,7 @@
             };
             reader.readAsArrayBuffer(file);
         }
+
         let droppedImage = null;
         let droppedPLY = null;
 
@@ -205,8 +209,6 @@
             }
         });
 
-
-
         document.getElementById('upload-btn').addEventListener('click', function() {
             if (droppedImage) {
                 const formData = new FormData();
@@ -236,7 +238,7 @@
             if (droppedImage && droppedPLY) {
                 const formData = new FormData();
                 formData.append('image', droppedImage);
-                formData.append('ply', droppedPLY);
+                <!-- formData.append('ply', droppedPLY); -->
 
                 const loader = document.getElementById('loader');
                 loader.style.display = 'block';
@@ -248,8 +250,9 @@
                     return response.json();
                 }).then(data => {
                     loader.style.display = 'none';
-                    document.getElementById('preview-image').src = data.convertedImageUrl;
-                    document.getElementById('viewer-frame').src = data.viewerUrl;
+                    document.getElementById('result-image').src = data.convertedImageUrl;
+                    document.getElementById('result-image').style.display = 'block';
+                    loadPLYFile(new Blob([data.plyFile], {type: 'application/octet-stream'}));
                 }).catch(error => {
                     loader.style.display = 'none';
                     alert('Conversion failed.');
@@ -258,6 +261,15 @@
                 alert('Please upload both an image and a .ply file.');
             }
         });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                droppedPLY = file;
+                loadPLYFile(file);
+            }
+        });
+
     </script>
 </body>
 </html>
