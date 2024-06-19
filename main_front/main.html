@@ -87,6 +87,31 @@
             text-align: center;
             margin-top: 5px;
         }
+
+        .example-photo-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .example-photo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .example-photo-item img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .example-photo-item p {
+            margin-top: 5px;
+            font-weight: bold;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
@@ -135,76 +160,107 @@
         </div>
     </section>
 
+    <section id="example" class="tm-section-pad-top">
+        <div class="example-photo-container">
+            <div class="example-photo-item">
+                <img src="img/image1.jpg" alt="Example 1">
+                <p>1</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image2.jpg" alt="Example 2">
+                <p>2</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image3.jpg" alt="Example 3">
+                <p>3</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image4.jpg" alt="Example 4">
+                <p>4</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image5.jpg" alt="Example 5">
+                <p>5</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image6.jpg" alt="Example 6">
+                <p>6</p>
+            </div>
+        </div>
+    </section>
+
     <section id="convert" class="tm-section-pad-top">
         <div id="container">
-            <div class="row tm-content-box">
-                <div class="col-lg-1">
-                    <i class="far fa-3x fa-chart-bar text-center tm-icon"></i>
-                </div>
-                <div class="col-lg-5">
-                    <div class="tm-intro-text-container">
-                        <h2 class="tm-text-primary mb-4">이미지 업로드</h2>
-                        <input type="file" id="fileInput" accept="image/*" multiple>
-                        <div id="photo-container" class="photo-container">
-                            <div class="photo-item" data-index="0">
-                                <img class="preview-img" style="display: none;">
-                                <div class="list-bar">
-                                    <label for="list-select-0">목록:</label>
-                                    <select id="list-select-0" class="list-select">
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="row tm-content-box">
+                    <div class="col-lg-1">
+                        <i class="far fa-3x fa-chart-bar text-center tm-icon"></i>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="tm-intro-text-container">
+                            <h2 class="tm-text-primary mb-4">이미지 업로드</h2>
+                            <input type="file" name="images" id="fileInput" accept="image/*" multiple>
+                            <div id="photo-container" class="photo-container">
+                                <div class="photo-item" data-index="0">
+                                    <img class="preview-img" style="display: none;">
+                                    <div class="list-bar">
+                                        <label for="list-select-0">목록:</label>
+                                        <select name="listSelect0" id="list-select-0" class="list-select">
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="photo-item" data-index="1">
+                                    <img class="preview-img" style="display: none;">
+                                    <div class="list-bar">
+                                        <label for="list-select-1">목록:</label>
+                                        <select name="listSelect1" id="list-select-1" class="list-select">
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="photo-item" data-index="2">
+                                    <img class="preview-img" style="display: none;">
+                                    <div class="list-bar">
+                                        <label for="list-select-2">목록:</label>
+                                        <select name="listSelect2" id="list-select-2" class="list-select">
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="photo-item" data-index="1">
-                                <img class="preview-img" style="display: none;">
-                                <div class="list-bar">
-                                    <label for="list-select-1">목록:</label>
-                                    <select id="list-select-1" class="list-select">
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="photo-item" data-index="2">
-                                <img class="preview-img" style="display: none;">
-                                <div class="list-bar">
-                                    <label for="list-select-2">목록:</label>
-                                    <select id="list-select-2" class="list-select">
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <div id="loader" class="loader"></div>
+                            <button type="submit" id="upload-btn">Upload</button>
                         </div>
-                        <div id="loader" class="loader"></div>
-                        <button id="upload-btn">Upload</button>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="tm-intro-text-container box-container">
+                            <h2 class="tm-text-primary mb-4">3D 변환 결과</h2>
+                            <div id="3dViewer"></div>
+                            <input type="file" id="plyFileInput" accept=".ply">
+                        </div>
+                        <button type="button" id="reset-btn">다시하기</button>
                     </div>
                 </div>
-                <div class="col-lg-5">
-                    <div class="tm-intro-text-container box-container">
-                        <h2 class="tm-text-primary mb-4">3D 변환 결과</h2>
-                        <div id="3dViewer"></div>
-                        <input type="file" id="plyFileInput" accept=".ply">
-                    </div>
-                    <button id="reset-btn">다시하기</button>
-                </div>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -268,8 +324,6 @@
             reader.readAsArrayBuffer(file);
         }
 
-        let selectedImages = [];
-
         document.getElementById('fileInput').addEventListener('change', function(event) {
             const files = event.target.files;
             handleFiles(files);
@@ -283,8 +337,13 @@
         });
 
         function handleFiles(files) {
-            selectedImages = [];
             const container = document.getElementById('photo-container');
+
+            for (let i = 0; i < 3; i++) {
+                const photoItem = container.querySelector(`.photo-item[data-index="${i}"] .preview-img`);
+                photoItem.src = '';
+                photoItem.style.display = 'none';
+            }
 
             for (let i = 0; i < Math.min(files.length, 3); i++) {
                 const file = files[i];
@@ -293,54 +352,10 @@
                     const previewImg = container.querySelector(`.photo-item[data-index="${i}"] .preview-img`);
                     previewImg.src = e.target.result;
                     previewImg.style.display = 'block';
-                    selectedImages.push(file);
                 };
                 reader.readAsDataURL(file);
             }
         }
-
-        document.getElementById('upload-btn').addEventListener('click', function() {
-            if (selectedImages.length === 0) {
-                alert('이미지를 업로드해 주세요.');
-                return;
-            }
-
-            const formData = new FormData();
-            const listSelections = [];
-
-            for (let i = 0; i < selectedImages.length; i++) {
-                formData.append('images[]', selectedImages[i]);
-                const listValue = document.querySelector(`#list-select-${i}`).value;
-                listSelections.push(parseInt(listValue, 10));
-            }
-
-            const formBody = new URLSearchParams();
-            for (const [key, value] of formData.entries()) {
-                formBody.append(key, value);
-            }
-            formBody.append('listSelections', listSelections.join(','));
-
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-
-            fetch('/upload', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formBody.toString(),
-            })
-            .then(response => response.json())
-            .then(data => {
-                loader.style.display = 'none';
-                alert('이미지가 성공적으로 업로드되었습니다!');
-            })
-            .catch(error => {
-                loader.style.display = 'none';
-                console.error('이미지 업로드 오류:', error);
-                alert('이미지 업로드에 실패했습니다.');
-            });
-        });
 
         document.getElementById('reset-btn').addEventListener('click', function() {
             location.reload(); // 페이지 새로고침
