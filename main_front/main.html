@@ -81,7 +81,7 @@
             margin-bottom: 1px;
             height: 200px;
         }
-    
+
         .preview-img {
             max-width: 100%;
             max-height: 100%;
@@ -95,31 +95,27 @@
             margin-top: 5px;
         }
 
-        .photo-container {
+        .example-photo-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
+            justify-content: space-between;
+            width: 80%;
+            margin: 0 auto;
         }
 
-        .photo-item {
-            flex: 1 1 30%;
-            margin: 10px;
-            text-align: center;
+        .example-photo-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-end;
         }
 
-        .photo-item img {
-            max-width: 100%;
-            height: auto;
+        .example-photo-item img {
+            max-width: 100px;
+            max-height: 100px;
         }
 
-        .photo-item p {
-            font-size: 1.5rem;
+        .example-photo-item p {
             font-weight: bold;
-            margin-top: 10px;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -170,6 +166,33 @@
     </section>
 
     <section id="convert" class="tm-section-pad-top">
+        <div class="example-photo-container">
+            <div class="example-photo-item">
+                <img src="img/image1.jpg" alt="Example 1">
+                <p>1</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image2.jpg" alt="Example 2">
+                <p>2</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image3.jpg" alt="Example 3">
+                <p>3</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image4.jpg" alt="Example 4">
+                <p>4</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image5.jpg" alt="Example 5">
+                <p>5</p>
+            </div>
+            <div class="example-photo-item">
+                <img src="img/image6.jpg" alt="Example 6">
+                <p>6</p>
+            </div>
+        </div>
+
         <div id="container">
             <div class="row tm-content-box">
                 <div class="col-lg-1">
@@ -400,25 +423,25 @@
                 alert('이미지를 업로드해 주세요.');
                 return;
             }
-        
+
             const formData = new FormData();
             const listSelections = [];
-        
+
             for (let i = 0; i < droppedImages.length; i++) {
                 formData.append('images[]', droppedImages[i]);
                 const listValue = document.querySelector(`#list-select-${i}`).value;
                 listSelections.push(parseInt(listValue, 10));
             }
-        
+
             const formBody = new URLSearchParams();
             for (const [key, value] of formData.entries()) {
                 formBody.append(key, value);
             }
             formBody.append('listSelections', listSelections.join(','));
-        
+
             const loader = document.getElementById('loader');
             loader.style.display = 'block';
-        
+
             fetch('/upload', {
                 method: 'POST',
                 headers: {
@@ -437,7 +460,6 @@
                 alert('이미지 업로드에 실패했습니다.');
             });
         });
-        
 
         document.getElementById('reset-btn').addEventListener('click', function() {
             location.reload(); // 페이지 새로고침
