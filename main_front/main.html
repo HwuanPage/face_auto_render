@@ -82,6 +82,12 @@
             display: block;
             margin: auto;
         }
+
+        .list-bar {
+            width: 100%;
+            text-align: center;
+            margin-top: 5px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
@@ -139,36 +145,62 @@
                         <div id="dropzone-image" class="dropzone row">
                             <div class="col-4 dropzone-column" data-index="0">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-0">목록:</label>
+                                    <select id="list-select-0" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-4 dropzone-column" data-index="1">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-1">목록:</label>
+                                    <select id="list-select-1" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-4 dropzone-column" data-index="2">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-2">목록:</label>
+                                    <select id="list-select-2" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-4 dropzone-column" data-index="3">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-3">목록:</label>
+                                    <select id="list-select-3" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-4 dropzone-column" data-index="4">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-4">목록:</label>
+                                    <select id="list-select-4" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-4 dropzone-column" data-index="5">
                                 <img class="preview-img" style="display: none;">
+                                <div class="list-bar">
+                                    <label for="list-select-5">목록:</label>
+                                    <select id="list-select-5" class="list-select">
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div id="loader" class="loader"></div>
                         <button id="upload-btn">Upload</button>
-                        <button id="convert-btn">Convert</button>
-                        <div class="loader" id="loader"></div>
                     </div>
-                </div>
-                <div class="col-lg-1">
-                    <i class="far fa-3x fa-comment-alt text-center tm-icon"></i>
                 </div>
                 <div class="col-lg-5">
                     <div class="tm-intro-text-container box-container">
                         <h2 class="tm-text-primary mb-4">3D 변환 결과</h2>
                         <div id="3dViewer">
-                            <img id="result-image" style="display:none;" />                     
+                            <img id="result-image" style="display:none;" />
                         </div>
                         <input type="file" id="fileInput" accept=".ply">
                     </div>
@@ -292,9 +324,15 @@
             }
 
             const formData = new FormData();
+            const listSelections = [];
+
             for (let i = 0; i < droppedImages.length; i++) {
                 formData.append('images[]', droppedImages[i]);
+                const listValue = document.querySelector(`#list-select-${i}`).value;
+                listSelections.push(parseInt(listValue, 10));
             }
+
+            formData.append('listSelections', JSON.stringify(listSelections));
 
             const loader = document.getElementById('loader');
             loader.style.display = 'block';
@@ -315,18 +353,22 @@
             });
         });
 
-
         document.getElementById('reset-btn').addEventListener('click', function() {
             location.reload(); // 페이지 새로고침
         });
 
-        document.getElementById('convert-btn').addEventListener('click', function() {
-            if (droppedPLY) {
-                loadPLYFile(droppedPLY);
-            } else {
-                alert('PLY 파일을 업로드해 주세요.');
+        // 목록 선택 항목 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('.list-select');
+            for (let i = 0; i < selects.length; i++) {
+                for (let j = 0; j <= 6; j++) {
+                    const option = document.createElement('option');
+                    option.value = j;
+                    option.textContent = j;
+                    selects[i].appendChild(option);
+                }
             }
         });
-</script>
+    </script>
 </body>
 </html>
