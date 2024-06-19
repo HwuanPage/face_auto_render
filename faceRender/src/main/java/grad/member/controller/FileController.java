@@ -18,7 +18,6 @@ import grad.member.service.MinioServiceIF;
 import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class FileController {
-
 	MinioServiceIF minioServiceIF;
 	public FileController(MinioServiceIF minioServiceIF) {
 		this.minioServiceIF=minioServiceIF;
@@ -29,23 +28,14 @@ public class FileController {
 	}
 	
 	@PostMapping("/upload")
-	public ModelAndView uploadFile(@RequestParam("file") List<MultipartFile> file) {
+	public void uploadFile(@RequestParam("files") List<MultipartFile> files) {
 		ModelAndView mav = new ModelAndView("main/loading-page");
-		int count=1;
 		List<MultipartFile> filelist = new ArrayList<MultipartFile>();
-		for (int i=0;i<count;i++) {
-			String fileName=file.get(i).getOriginalFilename();
-			String contentType= file.get(i).getContentType();
-			if (contentType != null && (contentType.equals("image/jpeg")||contentType.equals("image/jpeg")
-					|| contentType.equals("image/png"))) {
-	            mav.addObject("fileName"+Integer.toString(i),fileName);
-	        } else {
-	            mav.addObject("error","허용되지 않는 파일형식입니다.");
-	        }
-			minioServiceIF.uploadFile(fileName, file.get(i));
-			mav.addObject("objectPath"+Integer.toString(i),"user1/rendering/"+Integer.toString(i)+"/");
+		for (int i=0 ;i<files.size();i++) {			 
+			String fileName=files.get(i).getOriginalFilename();
+			String contentType= files.get(i).getContentType();
+			minioServiceIF.uploadFile(fileName, files.get(i));
 		}
-		return mav;
 	}
 	
 	@GetMapping("/check-file-exists")
@@ -56,14 +46,10 @@ public class FileController {
 		response.put("fileExists",fileExists);
 		return response;
 	}
-	@GetMapping("/result")
-	public String showResultPage() {
-		return "main/result-page";
-	}
 	@GetMapping("/download")
 	public void downloadFile(@RequestParam(value="objectPath",required = false)String objectPath,HttpServletResponse response) {
 		try {
-	        byte[] file = minioServiceIF.downloadFile("user1/rendering/0/");
+	        byte[] file = minioServiceIF.downloadFile(objectPath);	//예시:user1/rendering/0/
 	        
 	        // 파일 다운로드를 위한 응답 헤더 설정
 	        response.setContentType("application/octet-stream");
