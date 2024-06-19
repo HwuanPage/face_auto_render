@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <style>
+        body {
+            color: #181a1f;
+        }
+
+        .tm-hero-title, .tm-hero-subtitle {
+            color: #ffffff !important;
+        }
+
         #3dViewer {
             width: 100%;
             height: 500px;
@@ -88,6 +96,33 @@
             text-align: center;
             margin-top: 5px;
         }
+
+        .photo-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            flex: 1 1 30%;
+            margin: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .photo-item p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
@@ -97,7 +132,7 @@
 <body>
     <section id="infinite" class="text-white tm-font-big tm-parallax">
         <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">
-            <div class="container">
+            <div class="container" style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
                 <div class="tm-next">
                     <a href="#infinite" class="navbar-brand">Wirk</a>
                 </div>
@@ -108,6 +143,9 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link tm-nav-link" href="#infinite">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="#example">Example</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tm-nav-link" href="#convert">Convert</a>
@@ -127,9 +165,42 @@
         </div>
 
         <div class="tm-next tm-intro-next">
-            <a href="#convert" class="text-center tm-down-arrow-link">
+            <a href="#example" class="text-center tm-down-arrow-link">
                 <i class="fas fa-2x fa-arrow-down tm-down-arrow"></i>
             </a>
+        </div>
+    </section>
+
+    <section id="example" class="tm-section-pad-top">
+        <div class="container text-center">
+            <h2>다양한 스타일로</h2>
+            <h3>최대 6장 까지</h3>
+            <div class="photo-container">
+                <div class="photo-item">
+                    <img src="img/image1.jpg" alt="Example Image 1">
+                    <p>1</p>
+                </div>
+                <div class="photo-item">
+                    <img src="img/image2.jpg" alt="Example Image 2">
+                    <p>2</p>
+                </div>
+                <div class="photo-item">
+                    <img src="img/image3.jpg" alt="Example Image 3">
+                    <p>3</p>
+                </div>
+                <div class="photo-item">
+                    <img src="img/image4.jpg" alt="Example Image 4">
+                    <p>4</p>
+                </div>
+                <div class="photo-item">
+                    <img src="img/image5.jpg" alt="Example Image 5">
+                    <p>5</p>
+                </div>
+                <div class="photo-item">
+                    <img src="img/image6.jpg" alt="Example Image 6">
+                    <p>6</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -148,6 +219,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-0">목록:</label>
                                     <select id="list-select-0" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -156,6 +234,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-1">목록:</label>
                                     <select id="list-select-1" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -164,6 +249,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-2">목록:</label>
                                     <select id="list-select-2" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -172,6 +264,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-3">목록:</label>
                                     <select id="list-select-3" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -180,6 +279,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-4">목록:</label>
                                     <select id="list-select-4" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -188,6 +294,13 @@
                                 <div class="list-bar">
                                     <label for="list-select-5">목록:</label>
                                     <select id="list-select-5" class="list-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -355,19 +468,6 @@
 
         document.getElementById('reset-btn').addEventListener('click', function() {
             location.reload(); // 페이지 새로고침
-        });
-
-        // 목록 선택 항목 추가
-        document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.list-select');
-            for (let i = 0; i < selects.length; i++) {
-                for (let j = 0; j <= 6; j++) {
-                    const option = document.createElement('option');
-                    option.value = j;
-                    option.textContent = j;
-                    selects[i].appendChild(option);
-                }
-            }
         });
     </script>
 </body>
