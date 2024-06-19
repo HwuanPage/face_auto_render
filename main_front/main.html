@@ -51,7 +51,7 @@
         #container {
             width: 80%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 5px;
             border: 1px solid #ddd;
             margin-top: 20px;
         }
@@ -138,12 +138,11 @@
                     <div class="tm-intro-text-container box-container">
                         <h2 class="tm-text-primary mb-4">3D 변환 결과</h2>
                         <div id="3dViewer">
-                            <img id="result-image" style="display:none;" />
-                            
+                            <img id="result-image" style="display:none;" />                     
                         </div>
-                        
                         <input type="file" id="fileInput" accept=".ply">
                     </div>
+                    <button id="reset-btn">다시하기</button>
                 </div>
             </div>
         </div>
@@ -281,6 +280,10 @@
         } else {
             alert('올바른 PLY 파일을 선택해 주세요.');
         }
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', function() {
+        location.reload(); // 페이지 새로고침
     });
 </script>
 </body>
