@@ -271,49 +271,59 @@
                 var contents = event.target.result;
                 var loader = new THREE.PLYLoader();
                 var geometry = loader.parse(contents);
-                var scene = new THREE.Scene();
-                scene.background = new THREE.Color(0xffffff);
-
-                var material = new THREE.MeshPhongMaterial({ color: 0x999999, shininess: 80 });
+        
+                // 지오메트리 검사
+                console.log(geometry);
+        
+                // 노멀 재계산
                 geometry.computeFaceNormals();
                 geometry.computeVertexNormals();
-
+                geometry.center();
+        
+                var material = new THREE.MeshPhongMaterial({ color: 0x999999, shininess: 80, side: THREE.DoubleSide });
+        
                 var mesh = new THREE.Mesh(geometry, material);
                 mesh.castShadow = true;
                 mesh.receiveShadow = true;
                 mesh.rotation.reorder('YXZ');
-                mesh.rotation.y = THREE.MathUtils.degToRad(45);
-                mesh.rotation.x = THREE.MathUtils.degToRad(20);
+                mesh.rotation.y = THREE.MathUtils.degToRad(-90);
+        
+                var scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xffffff);
                 scene.add(mesh);
-
+        
                 var planeGeometry = new THREE.PlaneGeometry(200, 200);
                 var planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
                 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
                 plane.rotateX(-Math.PI / 2);
                 plane.receiveShadow = true;
-                plane.position.y = -1; // 평면을 아래로 이동
                 scene.add(plane);
-
-                var light = new THREE.DirectionalLight(0xffffff, 1);
-                light.position.set(0, 5, 10).normalize();
-                scene.add(light);
-
+        
+                var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(0, 5, 5);
+                directionalLight.castShadow = true;
+                scene.add(directionalLight);
+        
                 var ambientLight = new THREE.AmbientLight(0x404040);
                 scene.add(ambientLight);
-
+        
+                var pointLight = new THREE.PointLight(0xffffff, 0.5);
+                pointLight.position.set(0, 5, 0);
+                scene.add(pointLight);
+        
                 var camera = new THREE.PerspectiveCamera(50, document.getElementById('3dViewer').clientWidth / 300, 0.1, 1000);
-                camera.position.set(5, 3, -5); // 카메라 위치 조정
+                camera.position.set(0, 5, 200); // 카메라 위치 조정
                 camera.lookAt(new THREE.Vector3(0, 0, 0)); // 카메라가 바라보는 위치 설정
-
+        
                 var renderer = new THREE.WebGLRenderer();
                 renderer.setSize(document.getElementById('3dViewer').clientWidth, 300);
                 renderer.shadowMap.enabled = true;
-
+        
                 document.getElementById("3dViewer").innerHTML = "";
                 document.getElementById("3dViewer").appendChild(renderer.domElement);
-
+        
                 var controls = new THREE.OrbitControls(camera, renderer.domElement);
-
+        
                 function animate() {
                     requestAnimationFrame(animate);
                     controls.update();
@@ -323,6 +333,9 @@
             };
             reader.readAsArrayBuffer(file);
         }
+        
+        
+                
 
         document.getElementById('fileInput').addEventListener('change', function(event) {
             const files = event.target.files;

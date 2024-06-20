@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>작업중</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        text-align: center;
+    }
+    .loading-text {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="center-content">
+        <div class="loading-text">
+            <h1>작업중입니다.</h1>
+            <p>변환된 파일은 자동으로 저장됩니다.</p>
+        </div>
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+
+function startDownloads(fileNum, fileNames) {
+    var count = 0;
+
+    // 각 파일에 대해 순차적으로 다운로드를 시도합니다.
+    downloadNextFile(0);
+
+    function downloadNextFile(index) {
+        if (index >= fileNum) {
+            // 모든 파일 다운로드가 완료되면 메인 페이지로 이동합니다.
+            moveToMainPage();
+            return;
+        }
+
+        var fileName = makeExtensionName(fileNames[index], "_geometry.ply");
+        checkFileExists(fileName, function(exists) {
+            if (exists) {
+                downloadFile(fileName, function() {
+                    // 다음 파일 다운로드를 시도합니다.
+                    downloadNextFile(index + 1);
+                });
+            } else {
+                // 파일이 존재하지 않으면 재시도합니다.
+                setTimeout(function() {
+                    downloadNextFile(index);
+                }, 5000);
+            }
+        });
+    }
+
+    function makeExtensionName(fileName, extension) {
+        return fileName + extension;
+    }
+
+    function checkFileExists(fileName, callback) {
+        $.ajax({
+            url: "/check-file-exists",
+            type: "GET",
+            data: {
+                objectName: fileName
+            },
+            success: function(data) {
+                callback(data.fileExists);
+            },
+            error: function() {
+                callback(false);
+            }
+        });
+    }
+
+    function downloadFile(fileName, callback) {
+        location.href = "/download?objectName=" + fileName;
+        setTimeout(function() {
+            callback();
+        }, 1000); // 다운로드가 완료되었다고 가정하고, 적절한 시간을 설정합니다.
+    }
+
+    function moveToMainPage() {
+        // Hide the loading spinner
+        $(".loading-spinner").hide();
+        window.location.href = "/";
+    }
+}
+</script>
+</html>
