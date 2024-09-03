@@ -38,7 +38,7 @@ blockquote {
 
 .tm-section-pad-top {
   padding-top: 80px;
-  padding-bottom: 40px;
+  
 }
 
 .tm-content-box {
@@ -172,6 +172,67 @@ blockquote {
   #infinite {
     background-position: center -450px;
   }
+}
+
+.example-photo-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3개의 열을 생성합니다 */
+  gap: 35px; /* 이미지 사이의 간격을 넓힙니다 */
+  justify-content: center; /* 컨테이너 내에서 아이템들을 중앙 정렬합니다 */
+  max-width: 960px; /* 전체 컨테이너의 최대 너비를 설정합니다 */
+  margin: 0 auto; /* 컨테이너를 중앙에 배치합니다 */
+}
+
+.example-photo-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  
+}
+
+.example-photo-item img {
+  display: block;
+  width: 100%; /* 이미지를 컨테이너의 너비에 맞춥니다 */
+  height: 100%; /* 컨테이너의 높이에 맞춥니다 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너를 채웁니다 */
+}
+
+.example-photo-item p {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.example-photo-item:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#example {
+  padding: 100px 0; /* 상단 및 하단 여백을 조절하여 섹션 높이를 조정합니다 */
+}
+
+
+#convert {
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+.convert-form {
+  margin-bottom: 50px; /* 폼 아래에 여유 공간을 추가합니다 */
+}
+
+.convert-form .form-group {
+  margin-bottom: 20px; /* 각 폼 그룹 사이에 여유 공간을 추가합니다 */
+}
+
+.convert-form button {
+  margin-top: 20px; /* 버튼 위쪽에 여유 공간을 추가합니다 */
 }
 
 .tm-hero-text-container {
